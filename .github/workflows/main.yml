@@ -20,7 +20,11 @@ jobs:
     if: github.ref == 'refs/heads/develop'
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/deploy-action-dev
+      - uses: CDNievas/heroku-action@v1.0
+        with:
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.APP_NAME}}
 
   deploy_production:
     needs: build
@@ -29,7 +33,11 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/deploy-action-prod
+      - uses: CDNievas/heroku-action@v1.0
+        with:
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.APP_NAME}}
 
 
 
