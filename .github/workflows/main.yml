@@ -1,0 +1,43 @@
+name: Heroku Deploy
+on:
+  push:
+    branches:
+      - main
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup-python
+      - uses: ./.github/actions/fetch-dependencies
+      - uses: ./.github/actions/test-action
+
+  deploy_dev:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: development
+    if: github.ref == 'refs/heads/develop'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: CDNievas/heroku-action@v1.0
+        with:
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.APP_NAME}}
+
+  deploy_production:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+      - uses: actions/checkout@v2
+      - uses: CDNievas/heroku-action@v1.0
+        with:
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.APP_NAME}}
+
+
+
