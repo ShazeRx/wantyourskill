@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@2
+      - uses: actions/checkout@v2
       - uses: ./.github/actions/setup-python
       - uses: ./.github/actions/fetch-dependencies
       - uses: ./.github/actions/test-action
@@ -18,7 +18,7 @@ jobs:
     environment: development
     if: github.ref == 'refs/heads/develop'
     steps:
-      - uses: actions/checkout@2
+      - uses: actions/checkout@v2
       - uses: ./.github/actions/deploy-action-dev
 
   deploy_production:
@@ -26,7 +26,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     environment: production
     steps:
-      - uses: actions/checkout@2
+      - uses: actions/checkout@v2
       - uses: ./.github/actions/deploy-action-prod
 
 
