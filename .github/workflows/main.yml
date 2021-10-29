@@ -16,12 +16,14 @@ jobs:
   deploy_dev:
     runs-on: ubuntu-latest
     environment: development
+    if: github.ref == 'refs/heads/develop'
     steps:
       - uses: actions/checkout@2
       - uses: ./.github/actions/deploy-action-dev
 
   deploy_production:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     environment: production
     steps:
       - uses: actions/checkout@2
