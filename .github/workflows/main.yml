@@ -14,6 +14,7 @@ jobs:
       - uses: ./.github/actions/test-action
 
   deploy_dev:
+    needs: build
     runs-on: ubuntu-latest
     environment: development
     if: github.ref == 'refs/heads/develop'
@@ -22,6 +23,7 @@ jobs:
       - uses: ./.github/actions/deploy-action-dev
 
   deploy_production:
+    needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     environment: production
