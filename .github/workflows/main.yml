@@ -1,0 +1,31 @@
+name: Heroku Deploy
+on:
+  push:
+    branches:
+      - main
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@2
+      - uses: ./.github/actions/setup-python
+      - uses: ./.github/actions/fetch-dependencies
+      - uses: ./.github/actions/test-action
+
+  deploy_dev:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - uses: actions/checkout@2
+      - uses: ./.github/actions/deploy-action-dev
+
+  deploy_production:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@2
+      - uses: ./.github/actions/deploy-action-prod
+
+
+
